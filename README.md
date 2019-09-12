@@ -3,7 +3,7 @@ Brikkit is an **unofficial** plugin system for Brickadia, which **only** works o
 
 ## User Manual
 This manual will set you up with your own Brikkit server. I assume you are using Ubuntu 18.04 LTS. Firstly, you need to install the required packages:
-`# apt install expect wget pv tar unzip`
+`# apt install expect wget pv tar unzip xz-utils`
 
 Then, download and extract the latest [Brikkit binary](https://github.com/n42k/brikkit/releases), placing it in a convenient place. Configure the server by editing the `brikkit.conf` file. Finally, run `$ ./brikkit`, and the server should start. You should be able to connect to your server at this point through the server list if you have forwarded your ports correctly, otherwise try connecting to `127.0.0.1`.
 
