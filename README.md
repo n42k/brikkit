@@ -167,11 +167,6 @@ Loads the bricks from a file to the server.
 ##### Usage
 `global.Brikkit.loadBricks('seattle');`
 
-#### Load Bricks
-Loads the bricks from a file to the server.
-##### Usage
-`global.Brikkit.loadBricks('seattle');`
-
 #### Clear All Bricks
 DANGER: clears all bricks in the server.
 ##### Usage
