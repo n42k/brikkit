@@ -1,0 +1,16 @@
+{
+    "name": "brikkit",
+    "version": "0.1.0",
+    "keywords": [],
+    "main": "server.js",
+    "author": "n42k",
+    "contributors": [],
+    "dependencies": {
+        "cheerio": "^1.0.0-rc.3",
+        "dotenv": "^8.0.0",
+        "moment": "^2.24.0",
+        "request": "^2.88.0",
+        "tmp": "^0.1.0",
+        "uuid-validate": "0.0.3"
+    }
+}
