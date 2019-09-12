@@ -89,6 +89,7 @@ Before developing a feature, see if it is already described in Issues, if not, i
 ### Documentation
 
 Brikkit is organized as follows:
+
 | Directory | Purpose |
 |-----------|---------|
 | /         | Contains mainly glue code between Brikkit and its components |
@@ -96,6 +97,7 @@ Brikkit is organized as follows:
 | /events   | Contains the various events described in the Plugin API docs |
 
 The files in the root directory have the following responsibilities:
+
 | File | Responsibility |
 |-----------|---------|
 | /Makefile | Describes how to make the binary |
