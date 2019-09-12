@@ -7,7 +7,7 @@ This manual will set you up with your own Brikkit server. I assume you are using
 
 Then, download and extract the latest [Brikkit binary](https://github.com/n42k/brikkit/releases), placing it in a convenient place. Configure the server by editing the `brikkit.conf` file. Finally, run `$ ./brikkit`, and the server should start. You should be able to connect to your server at this point through the server list if you have forwarded your ports correctly, otherwise try connecting to `127.0.0.1`.
 
-To install plugins, take a look at the [plugin list](https://github.com/n42k/brikkit_plugins). After choosing the plugins you wish to install, download them from the link givens, and paste the *.zip* files in the *plugins* folder.
+To install plugins, take a look at the [plugin list](https://github.com/n42k/brikkit_plugins). After choosing the plugins you wish to install, download them from the link given, and paste the *.zip* files in the *plugins* folder.
 
 If you run through any problem, feel free to create an issue in the *Issues* tab of this repository.
 
@@ -57,9 +57,8 @@ Make sure to understand the terms of the license and what it means for the softw
 
 After this step is done, create a git repository inside the directory of the plugin you wish to publish: `git init`, add all essential files: `git add index.js LICENSE.md` (and any other files that are required for the plugin to run), and commit your files: `git commit -m "First commit"`. Then, using GitHub, create a repository for your plugin, and push your local git repository there. To conclude this part, create a *.zip* file of the essential files of your plugin, and [create a release](https://help.github.com/en/articles/creating-releases), making sure to attach the *.zip* file that you just created as a binary.
 
-The hardest parts have been done. Finally, create a pull request in [this repository](https://github.com/n42k/brikkit_plugins), with the template below. Your plugin will then be considered for inclusion into the official repository.
+The hardest parts have been done. Finally, create an issue in [this repository](https://github.com/n42k/brikkit_plugins), with the template below. Your plugin will then be considered for inclusion into the official repository.
 ```
-Name: hello world
 Tags: simple, chat
 Description: this plugin says "Hello World!" whenever someone says "!hello"
 Release: <LINK TO YOUR RELEASE>
