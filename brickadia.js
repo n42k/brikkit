@@ -142,8 +142,7 @@ bGlobalRulesetPhysicsDamage=False`);
         execSync(`rm -f ${BRICKADIA_FILENAME}`);
         execSync(`wget ${BRICKADIA_URL}`, {
             stdio: [null, process.stdout, process.stderr]});
-        execSync(`rm -rf brickadia`);
-        execSync(`mkdir brickadia`);
+        execSync(`rm -rf brickadia/*`);
         execSync(`pv ${BRICKADIA_FILENAME} | tar xJp -C brickadia`, {
             stdio: [null, process.stdout, process.stderr]});
         execSync(`rm ${BRICKADIA_FILENAME}`);
