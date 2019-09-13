@@ -20,7 +20,7 @@ const DEFAULT_SERVER_DESC = 'Get Brikkit at https://github.com/n42k/brikkit';
 const DEFAULT_SERVER_MAX_PLAYERS = 20;
 
 class Brickadia {
-    constructor() {
+    constructor(configuration) {
         if(this._getBrickadiaIfNeeded())
             this._writeDefaultConfiguration();
         
@@ -42,6 +42,11 @@ class Brickadia {
             ['-p', PROGRAM_PATH, 'BrickadiaServer',
                 '-NotInstalled', '-log', userArg, passwordArg, portArg]);
         this._spawn.stdin.setEncoding('utf8');
+        
+        // hack to change the map, fix later with a proper on start event
+        setTimeout(() => {
+            this.write(`travel ${configuration.getMap()}\n`);
+        }, 3000);
         
         this._callbacks = {
             close: [],
@@ -111,6 +116,7 @@ class Brickadia {
     }
     
     write(line) {
+        console.log(line);
         this._spawn.stdin.write(line);
     }
     

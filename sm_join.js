@@ -19,7 +19,8 @@ class StateMachineJoin {
                 line === 'Starting periodic server posting.' ||
                 line === 'Posting server.' ||
                 line === 'Auth digest valid.' ||
-                line === 'Auth payload valid. Result:')
+                line === 'Auth payload valid. Result:' ||
+                line === 'Deleting server.')
             return null; // ignore this line, it's not useful
         
         const [_, key, value] = /^(.*?): (.*)$/.exec(line);

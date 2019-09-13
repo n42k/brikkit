@@ -86,6 +86,7 @@ class Brikkit {
         this._brickadia.write(`Bricks.ClearAll\n`);
     }
     
+    // this disconnects all players.
     changeMap(mapName) {
         if(['Studio_Night',
             'Studio_Day',
@@ -94,7 +95,7 @@ class Brikkit {
             'Peaks'].indexOf(mapName) === -1)
             return;
         
-        this._brickadia.write(`servertravel ${mapName}\n`);
+        this._brickadia.write(`travel ${mapName}\n`);
     }
     
     getPlayerList() {
