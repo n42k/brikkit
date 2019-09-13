@@ -188,7 +188,7 @@ DANGER: clears all bricks in the server.
 `global.Brikkit.clearAllBricks();`
 
 #### Change Map
-Changes the map the server is running on.
+Changes the map the server is running on. Will disconnect all players.
 ##### Usage
 `global.Brikkit.changeMap('Studio');`
 The maps available are: `Studio_Night`, `Studio_Day`, `Studio`, `Plate`, `Peaks`.
