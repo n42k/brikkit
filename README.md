@@ -1,6 +1,8 @@
 # Welcome to Brikkit!
 Brikkit is an **unofficial** plugin system for Brickadia, which **only** works on Linux. It is still in its very early stages, and is limited to what you can do with the console of a dedicated Brickadia server. Many types of plugins can be built, from an auto saver, to a plugin that generates a map of the world. Interested already? Host your own Brikkit server by following the instructions below!
 
+Currently, a [Docker Image](https://github.com/n42k/brikkit_docker) is being worked on, with the goal of running Brikkit on Windows.
+
 ## User Manual
 This manual will set you up with your own Brikkit server. I assume you are using Ubuntu 18.04 LTS. Firstly, you need to install the required packages:
 `# apt install expect wget pv tar unzip xz-utils`
