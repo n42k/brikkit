@@ -72,6 +72,10 @@ Release: <LINK TO YOUR RELEASE>
 ```
 Thank you very much for contributing to Brikkit!
 
+### Saving and loading data
+
+There are four main directories in a Brikkit installation: `brickadia`, `plugins`, `conf` and `saved`. Brickadia itself is stored in the first one, whereas plugins are stored in the second. The `conf` directory is used to store configuration files (you can see an example of this in the [autosaver plugin](https://github.com/n42k/brikkit_autosaver). On the other hand, `saved` is used to store data between runs of the game, such as how much money each player has. You are free to use any format you deem appropriate in both cases, such as JSON or sqlite3. If you require higher performance, you can also save data to a proper database, but that will require users to install it in order to use your plugin.
+
 ### Using third party libraries
 
 If you wish to use third party libraries in your plugins, if you are on Windows, it is extremely highly recommended that you use the Windows Subsystem for Linux to execute the following steps.
