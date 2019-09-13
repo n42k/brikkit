@@ -18,9 +18,6 @@ class Brikkit {
         if(process.env.DEV === 'TRUE')
             this._developmentMode();
         
-        this._pluginSystem = new PluginSystem();
-        this._pluginSystem.loadAllPlugins();
-        
         // make an object entry for each type of event
         this._callbacks = {};
         for(const eventKey of Object.keys(Event)) {
@@ -35,10 +32,12 @@ class Brikkit {
         this._stateMachineJoin = new StateMachineJoin();
         
         this._scraper = new Scraper();
+        this._pluginSystem = new PluginSystem();
         
         this._brickadia.on('out', line => this._handleBrickadiaLine(line));
         
         this._terminal = new Terminal();
+        
     }
     
     /* 

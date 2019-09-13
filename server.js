@@ -3,3 +3,4 @@ require('dotenv').config({
 });
 
 const Brikkit = new (require('./brikkit.js'))();
+Brikkit.getPluginSystem().loadAllPlugins();
