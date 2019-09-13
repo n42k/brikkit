@@ -1,5 +1,6 @@
 default: executable
 	cp brikkit.conf.default build/brikkit.conf
+	cd build; zip Brikkit_vX.X.X.zip *
 
 debug: executable
 	cp brikkit.conf build/brikkit.conf
