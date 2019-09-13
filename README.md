@@ -1,14 +1,19 @@
 # Welcome to Brikkit!
-Brikkit is an **unofficial** plugin system for Brickadia, which **only** works on Linux. It is still in its very early stages, and is limited to what you can do with the console of a dedicated Brickadia server. Many types of plugins can be built, from an auto saver, to a plugin that generates a map of the world. Interested already? Host your own Brikkit server by following the instructions below!
-
-Currently, a [Docker Image](https://github.com/n42k/brikkit_docker) is being worked on, with the goal of running Brikkit on Windows.
+Brikkit is an **unofficial** plugin system for Brickadia, which now supports both Windows and Linux for hosting servers. It is still in its very early stages, and is limited to what you can do with the console of a dedicated Brickadia server. Many types of plugins can be built, from an auto saver, to a plugin that generates a map of the world. Interested already? Host your own Brikkit server by following the instructions below!
 
 ## User Manual
-This manual will set you up with your own Brikkit server. I assume you are using Ubuntu 18.04 LTS. Firstly, you need to install the required packages:
+This manual will set you up with your own Brikkit server.
+
+### Windows Manual
+Follow the instructions in [this repository](https://github.com/n42k/brikkit_docker) to install Brikkit for Windows.
+
+### Linux Manual
+I assume you are using Ubuntu 18.04 LTS. Firstly, you need to install the required packages:
 `# apt install expect wget pv tar unzip xz-utils`
 
 Then, download and extract the latest [Brikkit binary](https://github.com/n42k/brikkit/releases), placing it in a convenient place. Configure the server by editing the `brikkit.conf` file. Finally, run `$ ./brikkit`, and the server should start. You should be able to connect to your server at this point through the server list if you have forwarded your ports correctly, otherwise try connecting to `127.0.0.1`.
 
+### Post-Installation
 To install plugins, take a look at the [plugin list](https://github.com/n42k/brikkit_plugins). After choosing the plugins you wish to install, download them from the link given, and paste the *.zip* files in the *plugins* folder.
 
 If you run through any problem, feel free to create an issue in the *Issues* tab of this repository.
@@ -68,6 +73,8 @@ Release: <LINK TO YOUR RELEASE>
 Thank you very much for contributing to Brikkit!
 
 ### Using third party libraries
+
+If you wish to use third party libraries in your plugins, if you are on Windows, it is extremely highly recommended that you use the Windows Subsystem for Linux to execute the following steps.
 
 Install nodejs and npm: `# apt install nodejs npm`. Move into your plugin directory, and start a npm project there: `$ npm init -y`. Edit the created `package.json` file so that the license is MIT.
 
