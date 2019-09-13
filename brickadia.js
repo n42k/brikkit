@@ -111,7 +111,6 @@ class Brickadia {
     }
     
     write(line) {
-        console.log(line);
         this._spawn.stdin.write(line);
     }
     

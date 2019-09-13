@@ -11,7 +11,7 @@ const Scraper = require('./scraper.js');
 const Event = require('./events/event.js');
 
 class Brikkit {
-    constructor(configuration) {
+    constructor(configuration, logStream) {
         global.Brikkit = this;
         
         configuration = new Configuration(configuration);
@@ -19,6 +19,12 @@ class Brikkit {
         this._brickadia = new Brickadia(configuration);
         if(process.env.DEV === 'TRUE')
             this._developmentMode();
+        else {
+            this._brickadia.on('out',
+                line => logStream.write(`bout: "${line}"\n`));
+            this._brickadia.on('err',
+                line => logStream.write(`berr: "${line}"\n`));
+        }
         
         // make an object entry for each type of event
         this._callbacks = {};
@@ -46,6 +52,7 @@ class Brikkit {
                this._brickadia.write(`${args.join(' ')}\n`);
         });
         
+        console.log(' --- STARTING BRIKKIT SERVER ---');
         // HACK: do startup tasks
         // TO FIX: detect start by parsing Brickadia output
         setTimeout(() => {
@@ -53,8 +60,10 @@ class Brikkit {
             this._brickadia.write(`travel ${configuration.getMap()}\n`);
             
             // Send start event even later
-            setTimeout(() => 
-                this._putEvent(new Event.StartEvent(new Date())), 3000);
+            setTimeout(() => {
+                console.log(' --- SERVER START ---');
+                this._putEvent(new Event.StartEvent(new Date()))
+            }, 3000);
         }, 3000);
     }
     
