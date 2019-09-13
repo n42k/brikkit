@@ -15,11 +15,14 @@ const BRICKADIA_FILENAME = 'Brickadia_Alpha4_CL3414_Linux.tar.xz';
 const BRICKADIA_URL = 'https://static.brickadia.com/builds/CL3414/' +
         BRICKADIA_FILENAME;
 
+const DEFAULT_SERVER_NAME = 'Brikkit Server';
+const DEFAULT_SERVER_DESC = 'Get Brikkit at https://github.com/n42k/brikkit';
+const DEFAULT_SERVER_MAX_PLAYERS = 20;
+
 class Brickadia {
-    constructor(configuration) {
-        this._getBrickadiaIfNeeded();
-        
-        this._saveConfiguration(configuration);
+    constructor() {
+        if(this._getBrickadiaIfNeeded())
+            this._writeDefaultConfiguration();
         
         if(process.env.EMAIL === undefined ||
             process.env.PASSWORD === undefined ||
@@ -37,7 +40,7 @@ class Brickadia {
         // otherwise the io will eventually stop
         this._spawn = spawn('unbuffer',
             ['-p', PROGRAM_PATH, 'BrickadiaServer',
-                '-NotInstalled', '-log', userArg, passwordArg]);
+                '-NotInstalled', '-log', userArg, passwordArg, portArg]);
         this._spawn.stdin.setEncoding('utf8');
         
         this._callbacks = {
@@ -111,11 +114,8 @@ class Brickadia {
         this._spawn.stdin.write(line);
     }
     
-    _saveConfiguration(configuration) {
+    _writeDefaultConfiguration(configuration) {
         execSync(`mkdir -p ${CONFIG_PATH}`);
-        
-        // copy the configuration
-        const conf = JSON.parse(JSON.stringify(configuration));
         
         fs.writeFileSync(GAME_SERVER_SETTINGS,
 `[Server__BP_ServerSettings_General_C BP_ServerSettings_General_C]
@@ -123,21 +123,22 @@ MaxSelectedBricks=1000
 MaxPlacedBricks=1000
 SelectionTimeout=2.000000
 PlaceTimeout=2.000000
-ServerName=${configuration.getName()}
-ServerDescription=${configuration.getDescription()}
+ServerName=${DEFAULT_SERVER_NAME}
+ServerDescription=${DEFAULT_SERVER_DESC}
 ServerPassword=
-MaxPlayers=${configuration.getMaxPlayers()}
+MaxPlayers=${DEFAULT_SERVER_MAX_PLAYERS}
 bPubliclyListed=True
 WelcomeMessage="<color=\\"0055ff\\">Welcome to <b>{2}</>, {1}.</>"
 bGlobalRulesetSelfDamage=True
 bGlobalRulesetPhysicsDamage=False`);
     }
     
+    // returns whether downloading brickadia was needed
     _getBrickadiaIfNeeded() {
         if(fs.existsSync('brickadia') &&
             fs.existsSync(PROGRAM_PATH) &&
             !fs.existsSync(BRICKADIA_FILENAME))
-            return;
+            return false;
         
         execSync(`rm -f ${BRICKADIA_FILENAME}`);
         execSync(`wget ${BRICKADIA_URL}`, {
@@ -147,6 +148,8 @@ bGlobalRulesetPhysicsDamage=False`);
         execSync(`pv ${BRICKADIA_FILENAME} | tar xJp -C brickadia`, {
             stdio: [null, process.stdout, process.stderr]});
         execSync(`rm ${BRICKADIA_FILENAME}`);
+        
+        return true;
     }
 }
 
