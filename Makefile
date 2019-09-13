@@ -10,3 +10,4 @@ debug: executable
 executable:
 	echo 'You may ignore the below 2 warnings regarding dynamic requires'
 	pkg server.js --output build/brikkit
+	cp LICENSE build/LICENSE
