@@ -128,7 +128,7 @@ ServerDescription=${configuration.getDescription()}
 ServerPassword=
 MaxPlayers=${configuration.getMaxPlayers()}
 bPubliclyListed=True
-WelcomeMessage="<color=\"0055ff\">Welcome to <b>{2}</>, {1}.</>"
+WelcomeMessage="<color=\\"0055ff\\">Welcome to <b>{2}</>, {1}.</>"
 bGlobalRulesetSelfDamage=True
 bGlobalRulesetPhysicsDamage=False`);
     }
