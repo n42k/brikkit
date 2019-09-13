@@ -43,11 +43,6 @@ class Brickadia {
                 '-NotInstalled', '-log', userArg, passwordArg, portArg]);
         this._spawn.stdin.setEncoding('utf8');
         
-        // hack to change the map, fix later with a proper on start event
-        setTimeout(() => {
-            this.write(`travel ${configuration.getMap()}\n`);
-        }, 3000);
-        
         this._callbacks = {
             close: [],
             exit: [],

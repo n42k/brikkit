@@ -1,3 +1,5 @@
+const fs = require('fs');
+
 const Brickadia = require('./brickadia.js');
 const Terminal = require('./terminal.js');
 const Configuration = require('./data/configuration.js');
@@ -43,6 +45,17 @@ class Brikkit {
            if(cmd === 'cmd')
                this._brickadia.write(`${args.join(' ')}\n`);
         });
+        
+        // HACK: do startup tasks
+        // TO FIX: detect start by parsing Brickadia output
+        setTimeout(() => {
+            // change map to default map
+            this._brickadia.write(`travel ${configuration.getMap()}\n`);
+            
+            // Send start event even later
+            setTimeout(() => 
+                this._putEvent(new Event.StartEvent(new Date())), 3000);
+        }, 3000);
     }
     
     /* 
@@ -56,7 +69,7 @@ class Brikkit {
      */
     on(type, callback) {
         if(this._callbacks[type] === undefined)
-            throw new Error('Undefined Modkadia.on type.');
+            throw new Error('Undefined Brikkit.on type.');
         
         this._callbacks[type].push(callback);
     }
@@ -84,6 +97,17 @@ class Brikkit {
     
     loadBricks(saveName) {
         this._brickadia.write(`Bricks.Load ${saveName}\n`);
+    }
+    
+    getSaves(callback) {
+        fs.readdir('brickadia/Brickadia/Saved/Builds/', {}, (err, files) => {
+            if(err)
+                throw err;
+            
+            const filesWithoutExtension = files.map(file => file.slice(0, -4));
+            
+            callback(filesWithoutExtension);
+        });
     }
     
     // DANGER: clears all bricks in the server
