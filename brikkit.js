@@ -37,7 +37,12 @@ class Brikkit {
         this._brickadia.on('out', line => this._handleBrickadiaLine(line));
         
         this._terminal = new Terminal();
-        
+        this._terminal.on('out', line => {
+           const [cmd, ...args] = line.split(' ');
+           
+           if(cmd === 'cmd')
+               this._brickadia.write(`${args.join(' ')}\n`);
+        });
     }
     
     /* 
