@@ -10,6 +10,7 @@
         "dotenv": "^8.0.0",
         "moment": "^2.24.0",
         "request": "^2.88.0",
+        "strip-ansi": "^5.2.0",
         "tmp": "^0.1.0",
         "uuid-validate": "0.0.3"
     }
