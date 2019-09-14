@@ -43,6 +43,9 @@ class Brikkit {
         this._pluginSystem = new PluginSystem();
         
         this._brickadia.on('out', line => this._handleBrickadiaLine(line));
+        this._brickadia.on('close', () => {
+            throw new Error('Brickadia closed (probable crash)');
+        });
         
         this._terminal = new Terminal();
         this._terminal.on('out', line => {

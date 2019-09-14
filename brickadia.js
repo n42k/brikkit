@@ -87,9 +87,8 @@ class Brickadia {
             process.exit();
         });
         
-        process.on('uncaughtException', err => {
+        process.on('uncaughtException', _err => {
             sp.kill();
-            throw err;
         });
     }
     

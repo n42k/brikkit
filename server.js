@@ -35,9 +35,10 @@ function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-process.on('uncaughtException', async err => {
+process.on('uncaughtException', err => {
     console.log(' --- SERVER END --- ');
-    stream.end();
+    console.log(err.stack);
     
     fs.appendFileSync(logFile, err.stack);
+    process.exit();
 });
