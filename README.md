@@ -19,7 +19,7 @@ To install plugins, take a look at the [plugin list](https://github.com/n42k/bri
 If you run through any problem, feel free to create an issue in the *Issues* tab of this repository.
 
 ## Contributing
-As an user of Brikkit, you are already contributing to Brikkit by performing much needed tests! Make sure to share any issues or ideas you might have in the *Issues* tab of this repository.
+As a user of Brikkit, you are already contributing to Brikkit by performing much needed tests! Make sure to share any issues or ideas you might have in the *Issues* tab of this repository.
 
 Furthermore, you can implement plugins yourself that other people can use, or contribute to Brikkit itself by forking and making a pull request (based on an already created issue, or not).
 
