@@ -182,6 +182,17 @@ Loads the bricks from a file to the server.
 ##### Usage
 `global.Brikkit.loadBricks('seattle');`
 
+#### Get Saves
+Get all builds that were saved as an unordered array, without the `.brs` extension.
+##### Usage
+```
+global.Brikkit.getSaves(saves => {
+	// loads the first save if it exists
+	if(saves.length > 0)
+		global.Brikkit.loadBricks(saves[0]);
+});
+```
+
 #### Clear All Bricks
 DANGER: clears all bricks in the server.
 ##### Usage
