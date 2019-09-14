@@ -8,6 +8,7 @@ const PROGRAM_PATH =
     'brickadia/Brickadia/Binaries/Linux/BrickadiaServer-Linux-Shipping';
 
 const CONFIG_PATH = 'brickadia/Brickadia/Saved/Config/LinuxServer';
+const SAVES_PATH = 'brickadia/Brickadia/Saved/Builds';
 const GAME_SERVER_SETTINGS = CONFIG_PATH + '/ServerSettings.ini';
 
 const BRICKADIA_FILENAME = 'Brickadia_Alpha4_CL3414_Linux.tar.xz';
@@ -148,6 +149,7 @@ bGlobalRulesetPhysicsDamage=False`);
         execSync(`pv ${BRICKADIA_FILENAME} | tar xJp -C brickadia`, {
             stdio: [null, process.stdout, process.stderr]});
         execSync(`rm ${BRICKADIA_FILENAME}`);
+        execSync(`mkdir -p ${SAVES_PATH}`);
         
         return true;
     }

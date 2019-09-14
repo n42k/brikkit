@@ -6,6 +6,9 @@ const fs = require('fs');
 const { execSync } = require('child_process');
 
 execSync(`mkdir -p logs`);
+execSync(`mkdir -p conf`);
+execSync(`mkdir -p saved`);
+execSync(`mkdir -p plugins`);
 
 const dateString = (new Date()).toISOString();
 const logFile = `logs/log_${dateString}.txt`;
