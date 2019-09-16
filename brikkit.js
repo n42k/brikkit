@@ -54,22 +54,21 @@ class Brikkit {
                this._brickadia.write(`${args.join(' ')}\n`);
         });
         
-        console.log(' --- STARTING BRIKKIT SERVER ---');
-        // HACK: do startup tasks
-        // TO FIX: detect start by parsing Brickadia output
-        setTimeout(() => {
-            // change map to default map
+        console.log(' --- STARTING BRIKKIT SERVER --- ');
+        
+        this.on('prestart', evt => {
             this._brickadia.write(`travel ${configuration.getMap()}\n`);
-            
-            // Send start event even later
-            setTimeout(() => {
-                console.log(' --- SERVER START ---');
-                this._putEvent(new Event.StartEvent(new Date()))
-            }, 3000);
-        }, 3000);
+        });
+        
+        this.on('start', evt => {
+            console.log(' --- SERVER START --- ');
+        });
         
         this._joinParser = new Parser.JoinParser();
         this._chatParser = new Parser.ChatParser();
+        this._preStartParser = new Parser.PreStartParser();
+        this._startParser = new Parser.StartParser();
+        this._mapChangeParser = new Parser.MapChangeParser();
     }
     
     /* 
@@ -188,6 +187,19 @@ class Brikkit {
             
             this._putEvent(new Event.ChatEvent(date, player, message));
         }
+        
+        const serverPreStarted =
+            this._preStartParser.parse(generator, restOfLine);
+        if(serverPreStarted)
+            this._putEvent(new Event.PreStartEvent(date));
+        
+        const serverStarted = this._startParser.parse(generator, restOfLine);
+        if(serverStarted)
+            this._putEvent(new Event.StartEvent(date));
+        
+        const mapChanged = this._mapChangeParser.parse(generator, restOfLine);
+        if(mapChanged)
+            this._putEvent(new Event.MapChangeEvent(date));
     }
     
     _putEvent(event) {

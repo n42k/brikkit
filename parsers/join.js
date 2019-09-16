@@ -1,6 +1,7 @@
 const BaseParser = require('./baseparser.js');
 
 const Player = require('../data/player.js');
+
 /*
 These lines are related to players joins:
 1) [2019.09.14-17.42.21:370][423]LogServerList: UserName: n
