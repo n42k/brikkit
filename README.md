@@ -103,11 +103,12 @@ Before developing a feature, see if it is already described in Issues, if not, i
 
 Brikkit is organized as follows:
 
-| Directory | Purpose |
-|-----------|---------|
-| /         | Contains mainly glue code between Brikkit and its components |
-| /data     | Contains the data objects described in the Plugin API docs |
-| /events   | Contains the various events described in the Plugin API docs |
+| Directory | Purpose                                             |
+|-----------|-----------------------------------------------------|
+| /         | Mainly glue code between Brikkit and its components |
+| /data     | Data objects described in the Plugin API docs       |
+| /events   | Various events described in the Plugin API docs     |
+| /parsers  | Used to parse output from Brickadia                 |
 
 The files in the root directory have the following responsibilities:
 
@@ -121,7 +122,6 @@ The files in the root directory have the following responsibilities:
 | /pluginsystem.js | Implements the plugin system that Brikkit uses, allowing loading of directories and zip files |
 | /scraper.js | Implements the scrapper that allows loading users' profiles |
 | /server.js | Initial file, where execution begins. Loads configuration values from brikkit.conf and creates a Brikkit server. |
-| /sm_join.js | The state machine that is responsible for correctly interpreting when a player joins. |
 | /brickadia.js | Glue code for interacting with the terminal |
 
 To see the output of the underlying Brickadia server, you can write `DEV=TRUE` in the `brikkit.conf` file, which is very useful for debugging. Do take a look at the section below for a specific description of each event, how you can interact with the Brickadia server, and the various data objects that are available for you to use.
@@ -204,11 +204,6 @@ Changes the map the server is running on. Will disconnect all players.
 `global.Brikkit.changeMap('Studio');`
 The maps available are: `Studio_Night`, `Studio_Day`, `Studio`, `Plate`, `Peaks`.
 
-#### Get Player List
-Returns an array of all the players currently in the server.
-##### Usage
-`global.Brikkit.getPlayerList()`
-
 #### Get Player From Username
 Finds a player object by their username.
 ##### Usage
@@ -240,9 +235,6 @@ The join and leave events return a Player object, which must be further queried 
 | Username | The user name of the player | getUsername() |
 | UserID | The user id of the player | getUserId() |
 | HandleId | The handle id of the player (similar to user id, but is only valid for a single play session) | getHandleId() |
-| IP | The IP of the player | getIp() |
-| Port | The port of the player | getPort() |
-| Profile | The profile object of the player (as described below) | getProfile() |
 
 #### Profile Object
 | Field | Description | Getter |
