@@ -93,7 +93,7 @@ To package this plugin, zip everything in the folder (including `node_modules`) 
 
 ## Brikkit Developer Manual
 
-First install the required packages: `# apt install unbuffer wget pv tar unzip nodejs npm make`, then fork and clone your fork, create a `brikkit.conf` file with your Brickadia credentials and wanted server configuration in the root of the project's directory. Afterwards, inside the directory, get the required npm packages (`$ npm update`) and install pkg: `# npm install -g pkg`. Finally, run `$ node server` to start a Brikkit server. You should be able to connect to it using the server list or `127.0.0.1` if you have not forwarded your ports.
+First install the required packages: `# apt install expect wget pv tar unzip nodejs npm make`, then fork and clone your fork, create a `brikkit.conf` file with your Brickadia credentials and wanted server configuration in the root of the project's directory. Afterwards, inside the directory, get the required npm packages (`$ npm update`) and install pkg: `# npm install -g pkg`. Finally, run `$ node server` to start a Brikkit server. You should be able to connect to it using the server list or `127.0.0.1` if you have not forwarded your ports.
 
 You can treat this as a normal Brikkit installation, you can make a `plugins` directory and start testing plugins there, while modifying the Brikkit core. To create a debug binary, you can run `$ make debug` or, to create a release binary, run `$ make`.
 
