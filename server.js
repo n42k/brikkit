@@ -10,8 +10,12 @@ execSync(`mkdir -p conf`);
 execSync(`mkdir -p saved`);
 execSync(`mkdir -p plugins`);
 
-const dateString = (new Date()).toISOString();
-const logFile = `logs/log_${dateString}.txt`;
+const iso8601DateString = (new Date()).toISOString();
+
+// remove colons from the date string; required for windows
+const colonlessDateString = iso8601DateString.split(':').join('');
+
+const logFile = `logs/log_${colonlessDateString}.txt`;
 let stream = fs.createWriteStream(logFile, {flags:'a'});
 
 const oldConsoleLog = console.log;
