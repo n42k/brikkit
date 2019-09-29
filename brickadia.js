@@ -11,9 +11,9 @@ const CONFIG_PATH = 'brickadia/Brickadia/Saved/Config/LinuxServer';
 const SAVES_PATH = 'brickadia/Brickadia/Saved/Builds';
 const GAME_SERVER_SETTINGS = CONFIG_PATH + '/ServerSettings.ini';
 
-const BRICKADIA_FILENAME = 'Brickadia_Alpha4_CL3414_Linux.tar.xz';
+const BRICKADIA_FILENAME = 'Brickadia_Alpha4_Patch1_CL3642_Linux.tar.xz';
 
-const BRICKADIA_URL = 'https://static.brickadia.com/builds/CL3414/' +
+const BRICKADIA_URL = 'https://static.brickadia.com/builds/CL3642/' +
         BRICKADIA_FILENAME;
 
 const DEFAULT_SERVER_NAME = 'Brikkit Server';
