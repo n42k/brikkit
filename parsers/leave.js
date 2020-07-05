@@ -25,8 +25,7 @@ class LeaveParser extends BaseParser {
         if (!match)
             return null;
 
-        const player = this._brikkit._players.find(p => p._controller = match[1]);
-        return player;
+        return this._brikkit._players.find(p => p._controller = match[1]);
     }
 }
 
