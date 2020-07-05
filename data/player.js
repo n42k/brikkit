@@ -101,7 +101,7 @@ class Player {
         if (!this._brikkit)
             return null;
 
-        const controller = await this.getController();
+        const controller = this._controller || await this.getController();
 
         if (!controller)
             return;
@@ -122,25 +122,25 @@ class Player {
             return match.groups.controller === controller ?  match.groups.pawn : null;
         });
 
+        // request all states and players from brickadia
+        brickadia.write(`GetAll BP_PlayerController_C Pawn Name=${controller}\n`);
+        const pawn = await pawnPromise;
+
         // wait for this players' pawn
         const posPromise = brickadia.waitForLine(line => {
-            const match = line.match(pawnRegExp);
+            const match = line.match(posRegExp);
 
             // if no match, return null
             if (!match) return null;
-            let { x, y, z, pawn } = regexes.pos.groups;
+            let { x, y, z } = match.groups;
             x = Number(x), y = Number(y), z = Number(z);
 
             return match.groups.pawn === pawn ?  [x, y, z] : null;
         });
 
-        // request all states and players from brickadia
-        brickadia.write(`GetAll BP_PlayerController_C Pawn Name=${controller}\n`);
-        pawn = await pawnPromise;
-
         // request the owner for this state
         brickadia.write(`GetAll SceneComponent RelativeLocation Name=CollisionCylinder Outer=${pawn}\n`);
-        pos = await posPromise;
+        const pos = await posPromise;
 
         if (!pawn || !pos)
             return null;
@@ -149,6 +149,7 @@ class Player {
         return pos;
     }
 
+    // not very reliable
     isConnected() {
         return this._connected;
     }

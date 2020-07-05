@@ -86,8 +86,10 @@ class Brikkit {
         this._callbacks[type].push(callback);
     }
 
+    // Attempt to find a connected player name, otherwise return a non-connected player name
     getPlayerFromUsername(username) {
-        return this.players.find(p => p._username === username);
+        return this._players.find(p => p._connected &&
+            p._username === username) && this._players.find(p => p._username === username);
     }
 
     say(message) {
