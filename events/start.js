@@ -1,13 +1,13 @@
 const BaseEvent = require('./baseevent.js');
 
-class PreStartEvent extends BaseEvent {
+class StartEvent extends BaseEvent {
     constructor(date) {
         super(date);
     }
     
     getType() {
-        return 'prestart';
+        return 'start';
     }
 };
 
-module.exports = PreStartEvent;
+module.exports = StartEvent;
