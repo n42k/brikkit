@@ -128,6 +128,10 @@ class Brikkit {
         this._brickadia.write(`Bricks.ClearAll\n`);
     }
 
+    setWaterLevel(level) {
+        this._brickadia.write(`CE SetWaterLevel ${level}\n`);
+    }
+    
     // this disconnects all players.
     changeMap(mapName) {
         if(['Studio_Night',

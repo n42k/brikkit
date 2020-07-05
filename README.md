@@ -203,6 +203,11 @@ DANGER: clears all bricks in the server.
 ##### Usage
 `global.Brikkit.clearAllBricks();`
 
+#### Set Water Level
+Sets the water level. Only works on Peaks.
+##### Usage
+`global.Brikkit.setWaterLevel(10000);`
+
 #### Change Map
 Changes the map the server is running on. Will disconnect all players.
 ##### Usage
