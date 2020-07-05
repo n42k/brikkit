@@ -84,10 +84,17 @@ class Brickadia {
 
             for (let i = 0; i < this._watchers.length; i++) {
                 const watcher = this._watchers[i];
-                const match = line.match(watcher.regex);
-                if (match) {
-                    watcher.resolve(...line.match(watcher.regex));
-                    this._watchers.splice(i, 1);
+                try {
+                    // if the matcher is regex, match on regex, if it is a function, use that
+                    const match = watcher.matcher instanceof RegExp
+                        ? line.match(watcher.matcher)
+                        : watcher.matcher(line);
+                    if (match) {
+                        watcher.resolve(match);
+                        this._watchers.splice(i, 1);
+                    }
+                } catch (e) {
+                    console.error('Error in console matcher', e);
                 }
             }
             for(const callback of this._callbacks['out'])
@@ -106,16 +113,16 @@ class Brickadia {
     }
 
     // wait for stdout to match this regex, returns the match or times out
-    waitForLine(regex, timeoutDelay=100) {
+    waitForLine(matcher, timeoutDelay=100) {
         return new Promise((resolve, reject) => {
             let timeout;
 
             // create the watcher
             const watcher = {
-                regex,
+                matcher,
                 resolve: (...args) => {
                     clearTimeout(timeout);
-                    resolve(args);
+                    resolve(...args);
                 },
             }
 

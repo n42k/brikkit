@@ -37,20 +37,20 @@ const JOIN_SUCCESS_STRING = 'Join succeeded: ';
 class JoinParser extends BaseParser {
     constructor() {
         super();
-        
+
         this._username = null;
         this._userid = null;
-        
+
         this._waitingForSuccess = {};
     }
-    
+
     parse(generator, line) {
         if(generator === 'LogServerList')
             return this._logServerList(line);
         else
             return this._logNet(line);
     }
-    
+
     _logServerList(line) {
         if(line.startsWith(USERNAME_STRING)) {
             this._username =
@@ -61,28 +61,28 @@ class JoinParser extends BaseParser {
         } else if(line.startsWith(HANDLEID_STRING)) {
             const handleId =
                 line.substring(HANDLEID_STRING.length, line.length);
-            
+
             this._waitingForSuccess[this._username] = {
                 userid: this._userid,
                 handleid: handleId
             };
         }
-        
+
         return null;
     }
-    
+
     _logNet(line) {
         if(!line.startsWith(JOIN_SUCCESS_STRING))
             return null;
-        
+
         const username =
             line.substring(JOIN_SUCCESS_STRING.length, line.length);
-    
+
         const player = this._waitingForSuccess[username];
-        
+
         if(player === undefined)
             return null;
-        
+
         return new Player(username, player.userid, player.handleid);
     }
 }

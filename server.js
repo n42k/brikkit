@@ -19,13 +19,13 @@ const logFile = `logs/log_${colonlessDateString}.txt`;
 let stream = fs.createWriteStream(logFile, {flags:'a'});
 
 const oldConsoleLog = console.log;
-console.log = (msg) => {
-    oldConsoleLog(msg);
+console.log = (...msg) => {
+    oldConsoleLog(...msg);
 
     if(process.env.LOG === 'FALSE')
         return;
 
-    stream.write(msg + '\n');
+    stream.write(msg.join(' ') + '\n');
 }
 
 stream.on('error', err => {throw err});
@@ -42,7 +42,8 @@ function sleep(ms) {
 process.on('uncaughtException', err => {
     console.log(' --- SERVER END --- ');
     console.log(err.stack);
-    
+
     fs.appendFileSync(logFile, err.stack);
     process.exit();
 });
+
