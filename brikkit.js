@@ -89,8 +89,7 @@ class Brikkit {
 
     // Attempt to find a connected player name, otherwise return a non-connected player name
     getPlayerFromUsername(username) {
-        return this._players.find(p => p._connected &&
-            p._username === username) && this._players.find(p => p._username === username);
+        return this._players.find(p => p._username === username);
     }
 
     getPlayers() {
@@ -131,7 +130,7 @@ class Brikkit {
     setWaterLevel(level) {
         this._brickadia.write(`CE SetWaterLevel ${level}\n`);
     }
-    
+
     // this disconnects all players.
     changeMap(mapName) {
         if(['Studio_Night',
