@@ -3,6 +3,7 @@
 const fs = require('fs');
 const readline = require('readline');
 const { spawn, execSync } = require('child_process');
+const stripAnsi = require('strip-ansi');
 
 const PROGRAM_PATH =
     'brickadia/Brickadia/Binaries/Linux/BrickadiaServer-Linux-Shipping';
@@ -24,13 +25,13 @@ class Brickadia {
     constructor(configuration) {
         if(this._getBrickadiaIfNeeded())
             this._writeDefaultConfiguration();
-        
+
         if(process.env.EMAIL === undefined ||
             process.env.PASSWORD === undefined ||
             process.env.PORT === undefined) {
             throw new Error('Email or password are not set!');
         }
-        
+
         // get user email and password, and server port based on env vars
         const userArg = `-User="${process.env.EMAIL}"`;
         const passwordArg = `-Password="${process.env.PASSWORD}"`;
@@ -43,14 +44,16 @@ class Brickadia {
             ['-p', PROGRAM_PATH, 'BrickadiaServer',
                 '-NotInstalled', '-log', userArg, passwordArg, portArg]);
         this._spawn.stdin.setEncoding('utf8');
-        
+
         this._callbacks = {
             close: [],
             exit: [],
             out: [],
             err: []
         };
-        
+
+        this._watchers = [];
+
         this._spawn.on('close', code => {
             for(const callback of this._callbacks['close'])
                 callback(code);
@@ -77,22 +80,70 @@ class Brickadia {
         });
 
         outRl.on('line', line => {
+            line = stripAnsi(line);
+
+            for (let i = 0; i < this._watchers.length; i++) {
+                const watcher = this._watchers[i];
+                try {
+                    // if the matcher is regex, match on regex, if it is a function, use that
+                    const match = watcher.matcher instanceof RegExp
+                        ? line.match(watcher.matcher)
+                        : watcher.matcher(line);
+                    if (match) {
+                        watcher.resolve(match);
+                        this._watchers.splice(i, 1);
+                    }
+                } catch (e) {
+                    console.error('Error in console matcher', e);
+                }
+            }
             for(const callback of this._callbacks['out'])
                 callback(line);
         });
-        
+
         const sp = this._spawn;
         process.on('SIGINT', () => {
             sp.kill();
             process.exit();
         });
-        
+
         process.on('uncaughtException', _err => {
             sp.kill();
         });
     }
-    
-    /* 
+
+    // wait for stdout to match this regex, returns the match or times out
+    waitForLine(matcher, timeoutDelay=100) {
+        return new Promise((resolve, reject) => {
+            let timeout;
+
+            // create the watcher
+            const watcher = {
+                matcher,
+                resolve: (...args) => {
+                    clearTimeout(timeout);
+                    resolve(...args);
+                },
+            }
+
+            // if the delay is non 0, kill the promise after some time
+            if (timeoutDelay !== 0) {
+                timeout = setTimeout(() => {
+                    // remove the watcher if it exists
+                    const index = this._watchers.indexOf(watcher);
+                    if (index > -1)
+                        this._watchers.splice(index, 0);
+
+                    // reject the promise
+                    reject('timed out');
+                }, timeoutDelay);
+            }
+
+            this._watchers.push(watcher);
+        });
+    }
+
+    /*
      * Types available:
      * 'close': on normal brickadia close
      *      args: code
@@ -106,17 +157,17 @@ class Brickadia {
     on(type, callback) {
         if(this._callbacks[type] === undefined)
             throw new Error('Undefined Brickadia.on type.');
-        
+
         this._callbacks[type].push(callback);
     }
-    
+
     write(line) {
         this._spawn.stdin.write(line);
     }
-    
+
     _writeDefaultConfiguration(configuration) {
         execSync(`mkdir -p ${CONFIG_PATH}`);
-        
+
         fs.writeFileSync(GAME_SERVER_SETTINGS,
 `[Server__BP_ServerSettings_General_C BP_ServerSettings_General_C]
 MaxSelectedBricks=1000
@@ -132,14 +183,14 @@ WelcomeMessage="<color=\\"0055ff\\">Welcome to <b>{2}</>, {1}.</>"
 bGlobalRulesetSelfDamage=True
 bGlobalRulesetPhysicsDamage=False`);
     }
-    
+
     // returns whether downloading brickadia was needed
     _getBrickadiaIfNeeded() {
         if(fs.existsSync('brickadia') &&
             fs.existsSync(PROGRAM_PATH) &&
             !fs.existsSync(BRICKADIA_FILENAME))
             return false;
-        
+
         execSync(`rm -f ${BRICKADIA_FILENAME}`);
         execSync(`wget ${BRICKADIA_URL}`, {
             stdio: [null, process.stdout, process.stderr]});
@@ -149,7 +200,7 @@ bGlobalRulesetPhysicsDamage=False`);
             stdio: [null, process.stdout, process.stderr]});
         execSync(`rm ${BRICKADIA_FILENAME}`);
         execSync(`mkdir -p ${SAVES_PATH}`);
-        
+
         return true;
     }
 }
