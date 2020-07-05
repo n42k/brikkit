@@ -33,6 +33,7 @@ class Player {
         this._connected = false;
         this._controller = null;
         this._state = null;
+        this._brikkit = null;
     }
 
     // get player's controller
