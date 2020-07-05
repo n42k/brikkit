@@ -45,7 +45,6 @@ class Player {
             this._controller;
 
         const brickadia = this._brikkit._brickadia;
-        let state, controller;
 
         // regexes for matching player state and controller
         const stateRegExp = /BP_PlayerState_C .+?PersistentLevel\.(?<state>BP_PlayerState_C_\d+)\.PlayerName = (?<name>.+)$/;
@@ -67,6 +66,10 @@ class Player {
             return name === this._username ? state : null;
         });
 
+        // request all states and players from brickadia
+        brickadia.write(`GetAll BRPlayerState PlayerName\n`);
+        const state = await statePromise;
+
         // wait for this players' controller
         const controllerPromise = brickadia.waitForLine(line => {
             const match = line.match(contollerRegExp);
@@ -78,13 +81,9 @@ class Player {
         });
 
 
-        // request all states and players from brickadia
-        brickadia.write(`GetAll BRPlayerState PlayerName\n`);
-        state = await statePromise;
-
         // request the owner for this state
         brickadia.write(`GetAll BRPlayerState Owner Name=${state}\n`);
-        controller = await controllerPromise;
+        const controller = await controllerPromise;
 
         if (!controller || !state)
             return null;
