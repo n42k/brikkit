@@ -122,6 +122,10 @@ class Brikkit {
     clearAllBricks() {
         this._brickadia.write(`Bricks.ClearAll\n`);
     }
+
+    setWaterLevel(level) {
+        this._brickadia.write(`CE SetWaterLevel ${level}\n`);
+    }
     
     // this disconnects all players.
     changeMap(mapName) {
