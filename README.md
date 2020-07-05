@@ -182,8 +182,8 @@ Loads the bricks from a file to the server.
 ##### Usage
 `global.Brikkit.loadBricks('seattle');`
 
-#### Get players on the server
-Loads the bricks from a file to the server.
+#### Get Players
+Get players on the server
 ##### Usage
 `global.Brikkit.getPlayers();`
 
