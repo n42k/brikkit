@@ -132,10 +132,9 @@ class Player {
 
             // if no match, return null
             if (!match) return null;
-            let { x, y, z } = match.groups;
-            x = Number(x), y = Number(y), z = Number(z);
+            const { x, y, z } = match.groups;
 
-            return match.groups.pawn === pawn ?  [x, y, z] : null;
+            return match.groups.pawn === pawn ? [x, y, z].map(Number) : null;
         });
 
         // request the owner for this state
