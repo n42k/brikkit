@@ -64,6 +64,7 @@ class Brikkit {
         });
 
         this._joinParser = new Parser.JoinParser();
+        this._leaveParser = new Parser.LeaveParser(this);
         this._chatParser = new Parser.ChatParser();
         this._preStartParser = new Parser.PreStartParser();
         this._startParser = new Parser.StartParser();
@@ -90,6 +91,10 @@ class Brikkit {
     getPlayerFromUsername(username) {
         return this._players.find(p => p._connected &&
             p._username === username) && this._players.find(p => p._username === username);
+    }
+
+    getPlayers() {
+        return this._players;
     }
 
     say(message) {
@@ -183,6 +188,20 @@ class Brikkit {
                     this._putEvent(new Event.JoinEvent(date, joinedPlayer))
                     console.error(e);
                 });
+        }
+
+        const leavingPlayer = this._leaveParser.parse(generator, restOfLine);
+        if(leavingPlayer !== null) {
+            // note that this player is not connected
+            leavingPlayer._connected = false;
+
+            // remove the player from the list of players
+            const index = this._players.indexOf(leavingPlayer);
+            if (index > -1)
+                this._players.splice(index, 1);
+
+            // emit the leave event
+            this._putEvent(new Event.LeaveEvent(date, leavingPlayer))
         }
 
         const chatParserResult = this._chatParser.parse(generator, restOfLine);
