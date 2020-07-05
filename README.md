@@ -37,11 +37,11 @@ Now we will create your first plugin! Create a directory in the *plugins* folder
 ```
 // when a chat event is received
 global.Brikkit.on('chat', evt => {
-	// if the player said "!hello"
-	if(evt.getContent() === '!hello') {
-		// broadcast the message "Hello World!"
-		global.Brikkit.say('Hello World!'); 
-	}
+  // if the player said "!hello"
+  if(evt.getContent() === '!hello') {
+    // broadcast the message "Hello World!"
+    global.Brikkit.say('Hello World!');
+  }
 });
 ```
 
@@ -53,11 +53,11 @@ The first step in publishing your plugin is checking that it works as you intend
 To get a plugin published officially on the Brikkit repository, however, it **has to** be an useful plugin that adds value to a server, and not just a random experiment. It **must** be released under the MIT license, a free software license that is ideal for small programs, which is the case of plugins. To do this, add a file named `LICENSE` to your plugin, and put the following text in it, making sure to replace `<YEAR>` and `<COPYRIGHT HOLDER>` with the current year and your name:
 
 > Copyright \<YEAR> \<COPYRIGHT HOLDER>
-> 
+>
 > Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 >
 > The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-> 
+>
 > THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 Make sure to understand the terms of the license and what it means for the software you are publishing. If you do not agree with these terms, you are free to not publish plugins on the official repository.
@@ -154,7 +154,7 @@ Is called when a player joins the server.
 | Type | Type of the event ("join") | evt.getType() |
 
 #### Leave Event
-Is called when a player joins the server.
+Is called when a player leaves the server.
 ##### Usage
 `global.Brikkit.on('leave', evt => ...`
 ##### Fields
@@ -162,7 +162,7 @@ Is called when a player joins the server.
 |-------|-------------|--------|
 | Date | Date object containing the date the event happened on Brickadia. | evt.getDate() |
 | Player | Player object with details of the player who left | evt.getPlayer() |
-| Type | Type of the event ("join") | evt.getType() |
+| Type | Type of the event ("leave") | evt.getType() |
 
 ### Server Interface
 These commands interface with the server, allowing you to interact with it. Only the commands that were deemed useful were added to this list.
@@ -182,14 +182,19 @@ Loads the bricks from a file to the server.
 ##### Usage
 `global.Brikkit.loadBricks('seattle');`
 
+#### Get players on the server
+Loads the bricks from a file to the server.
+##### Usage
+`global.Brikkit.getPlayers();`
+
 #### Get Saves
 Get all builds that were saved as an unordered array, without the `.brs` extension.
 ##### Usage
 ```
 global.Brikkit.getSaves(saves => {
-	// loads the first save if it exists
-	if(saves.length > 0)
-		global.Brikkit.loadBricks(saves[0]);
+  // loads the first save if it exists
+  if(saves.length > 0)
+    global.Brikkit.loadBricks(saves[0]);
 });
 ```
 
@@ -223,18 +228,21 @@ Returns the Brikkit scrapper, allowing you to scrape user profiles based on the 
 ```
 const scraper = global.Brikkit.getScraper();
 scraper.getProfile('402ff04c-a0f8-4d07-9471-801889fa0fb2', profile => {
-	console.log(`Hello ${profile.getUsername()}!`);
+  console.log(`Hello ${profile.getUsername()}!`);
 });
 ```
 ### Objects
 The join and leave events return a Player object, which must be further queried to retrieve more information. Details about these kinds of objects are available here.
 
 #### Player Object
-| Field | Description | Getter |
-|-------|-------------|--------|
-| Username | The user name of the player | getUsername() |
-| UserID | The user id of the player | getUserId() |
-| HandleId | The handle id of the player (similar to user id, but is only valid for a single play session) | getHandleId() |
+| Field | Description | Getter | Type |
+|-------|-------------|--------|------|
+| Username | The user name of the player | getUsername() | string |
+| UserID | The user id of the player | getUserId() | string |
+| HandleId | The handle id of the player (similar to user id, but is only valid for a single play session) | getHandleId() | string |
+| Controller | The controller of the player | getController() | Promise<string> |
+| Connected | The player connection status | isConnected() | boolean |
+| Position | The player player position | getPosition() | Promise<[Number, Number, Number]> |
 
 #### Profile Object
 | Field | Description | Getter |
