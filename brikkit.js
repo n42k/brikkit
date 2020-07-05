@@ -186,11 +186,8 @@ class Brikkit {
             this._addPlayer(joinedPlayer);
 
             joinedPlayer.getController()
-                .then(() => this._putEvent(new Event.JoinEvent(date, joinedPlayer)))
-                .catch(e => {
-                    this._putEvent(new Event.JoinEvent(date, joinedPlayer))
-                    console.error(e);
-                });
+                .finally(() => this._putEvent(new Event.JoinEvent(date, joinedPlayer)))
+                .catch(e => console.error(e));
         }
 
         const leavingPlayer = this._leaveParser.parse(generator, restOfLine);
