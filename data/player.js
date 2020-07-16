@@ -48,7 +48,7 @@ class Player {
 
         // regexes for matching player state and controller
         const stateRegExp = /BP_PlayerState_C .+?PersistentLevel\.(?<state>BP_PlayerState_C_\d+)\.PlayerName = (?<name>.+)$/;
-        const contollerRegExp = /BP_PlayerState_C .+?PersistentLevel\.(?<state>BP_PlayerState_C_\d+)\.Owner = BP_PlayerController_C'.+?:PersistentLevel.(?<controller>BP_PlayerController_C_\d+)'/;
+        const controllerRegExp = /BP_PlayerState_C .+?PersistentLevel\.(?<state>BP_PlayerState_C_\d+)\.Owner = BP_PlayerController_C'.+?:PersistentLevel.(?<controller>BP_PlayerController_C_\d+)'/;
 
         // wait for this players' state
         const statePromise = brickadia.waitForLine(line => {
@@ -72,7 +72,7 @@ class Player {
 
         // wait for this players' controller
         const controllerPromise = brickadia.waitForLine(line => {
-            const match = line.match(contollerRegExp);
+            const match = line.match(controllerRegExp);
 
             // if no match, return null
             if (!match) return null;
