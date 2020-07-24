@@ -17,7 +17,8 @@ class LeaveParser extends BaseParser {
         if (generator !== 'LogNet')
             return null;
 
-        if (!line.startsWith('UNetConnection::Close:'))
+        // this is not "UNetConnection" because the UNetConnection line does not occur on kick/ban
+        if (!line.startsWith('UChannel::Close:'))
             return null;
 
         const ownerRegExp = /Owner: (BP_PlayerController_C_\d+)/;
