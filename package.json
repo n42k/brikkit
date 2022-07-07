@@ -8,7 +8,7 @@
     "dependencies": {
         "cheerio": "^1.0.0-rc.3",
         "dotenv": "^8.0.0",
-        "moment": "^2.24.0",
+        "moment": "^2.29.4",
         "request": "^2.88.0",
         "strip-ansi": "^5.2.0",
         "tmp": "^0.1.0",
